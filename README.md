@@ -7,7 +7,7 @@ A Prism plugin for Jekyll with support included for the official plugins.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem jekyll-prism
+gem mm-jekyll-prism
 ```
 
 And then execute:
@@ -16,7 +16,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install jekyll-prism
+    $ gem install mm-jekyll-prism
 
 ## Usage
 
