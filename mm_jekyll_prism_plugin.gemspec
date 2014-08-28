@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "mm-jekyll-prism"
-  spec.version       = "0.0.1"
+  spec.version       = "0.0.2"
   spec.authors       = ["Tim Oram"]
   spec.email         = ["mitmaro@gmail.com"]
   spec.summary       = %q{Prism plugin for Jekyll}
