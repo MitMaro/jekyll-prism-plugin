@@ -2,7 +2,7 @@ TEST_DIR = File.dirname(__FILE__)
 TMP_DIR  = File.expand_path("../tmp", TEST_DIR)
 
 require 'jekyll'
-require File.expand_path("../lib/jekyll-prism.rb", TEST_DIR)
+require File.expand_path("../lib/mm-jekyll-prism.rb", TEST_DIR)
 
 Jekyll.logger.log_level = :error
 STDERR.reopen(test(?e, '/dev/null') ? '/dev/null' : 'NUL:')
