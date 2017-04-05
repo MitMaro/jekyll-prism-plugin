@@ -29,7 +29,27 @@ RSpec.describe Jekyll::Prism do
 			prism = Jekyll::Prism.new("prism", 'javascript highlight="1-2,4,5-9" ', ["{% endprism %}"]);
 			expect(prism.instance_variable_get(:@highlight)).to eql("1-2,4,5-9")
 		end
+
+		it "Understands how to accept a user parameter" do
+			prism = Jekyll::Prism.new("prism", 'javascript user="john"', ["{% endprism %}"]);
+			expect(prism.instance_variable_get(:@user)).to eql("john")
+		end
+
+		it "Understands how to accept a host parameter" do
+			prism = Jekyll::Prism.new("prism", 'javascript host="local" ', ["{% endprism %}"]);
+			expect(prism.instance_variable_get(:@host)).to eql("local")
+		end
 	
+		it "Understands how to accept a prompt parameter" do
+			prism = Jekyll::Prism.new("prism", 'javascript prompt="john" ', ["{% endprism %}"]);
+			expect(prism.instance_variable_get(:@prompt)).to eql("john")
+		end
+
+		it "Understands how to accept a output parameter" do
+			prism = Jekyll::Prism.new("prism", 'javascript output="1-2,4,5-9"', ["{% endprism %}"]);
+			expect(prism.instance_variable_get(:@output)).to eql("1-2,4,5-9")
+		end
+
 		it "Understands how to accept a numbering parameter" do
 			prism = Jekyll::Prism.new("prism", 'javascript numbering ', ["{% endprism %}"]);
 			expect(prism.instance_variable_get(:@numbering)).to eql(true)
@@ -38,14 +58,33 @@ RSpec.describe Jekyll::Prism do
 			prism = Jekyll::Prism.new("prism", 'javascript numbering=-10 ', ["{% endprism %}"]);
 			expect(prism.instance_variable_get(:@numbering)).to eql(-10)
 		end
+
 	end
 	
 	context "Valid render from code with all options" do
 		
-		let(:content)  { '{% prism cpp numbering=5 highlight="1,2-5,10" %} My Code {% endprism %}' }
+		let(:content)  { '{% prism cpp numbering=5 highlight="1,2-5,10" %}{% endprism %}' }
 		
 		it "Understands how to render code from code block" do
-			expect(output).to match("<pre class=\" language-cpp  line-numbers \" data-start=\"5\" data-line=\"1,2-5,10\"><code>My Code</code></pre>")
+			expect(output).to match("<pre class=\" language-cpp  line-numbers \" data-start=\"5\" data-line=\"1,2-5,10\"><code></code></pre>")
+		end
+	end
+
+	context "Valid render from code with user, host, and output options on" do
+		
+		let(:content)  { '{% prism cpp host="local" user="john" output="1,2-5,10" %}{% endprism %}' }
+		
+		it "Understands how to render code from code block" do
+			expect(output).to match("<pre class=\" language-cpp  command-line \" data-output=\"1,2-5,10\" data-user=\"john\" data-host=\"local\"><code></code></pre>")
+		end
+	end
+
+	context "Valid render from code with prompt and output options on" do
+		
+		let(:content)  { '{% prism cpp prompt="john" output="1,2-5,10" %}{% endprism %}' }
+		
+		it "Understands how to render code from code block" do
+			expect(output).to match("<pre class=\" language-cpp  command-line \" data-output=\"1,2-5,10\" data-prompt=\"john\"><code></code></pre>")
 		end
 	end
 	
