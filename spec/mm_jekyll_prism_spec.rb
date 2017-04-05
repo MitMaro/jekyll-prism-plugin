@@ -63,28 +63,28 @@ RSpec.describe Jekyll::Prism do
 	
 	context "Valid render from code with all options" do
 		
-		let(:content)  { '{% prism cpp numbering=5 highlight="1,2-5,10" %} My Code {% endprism %}' }
+		let(:content)  { '{% prism cpp numbering=5 highlight="1,2-5,10" %}{% endprism %}' }
 		
 		it "Understands how to render code from code block" do
-			expect(output).to match("<pre class=\" language-cpp  line-numbers \" data-start=\"5\" data-line=\"1,2-5,10\"><code>My Code</code></pre>")
+			expect(output).to match("<pre class=\" language-cpp  line-numbers \" data-start=\"5\" data-line=\"1,2-5,10\"><code></code></pre>")
 		end
 	end
 
 	context "Valid render from code with user, host, and output options on" do
 		
-		let(:content)  { '{% prism cpp host="local" user="john" output="1,2-5,10" %} My Code {% endprism %}' }
+		let(:content)  { '{% prism cpp host="local" user="john" output="1,2-5,10" %}{% endprism %}' }
 		
 		it "Understands how to render code from code block" do
-			expect(output).to match("<pre class=\" language-java  command-line \" data-output=\"1,2-5,10\" data-user=\"john\" data-host=\"local\"></pre>")
+			expect(output).to match("<pre class=\" language-cpp  command-line \" data-output=\"1,2-5,10\" data-user=\"john\" data-host=\"local\"><code></code></pre>")
 		end
 	end
 
 	context "Valid render from code with prompt and output options on" do
 		
-		let(:content)  { '{% prism cpp prompt="john" output="1,2-5,10" %} My Code {% endprism %}' }
+		let(:content)  { '{% prism cpp prompt="john" output="1,2-5,10" %}{% endprism %}' }
 		
 		it "Understands how to render code from code block" do
-			expect(output).to match("<pre class=\" language-java  command-line \" data-output=\"2-4\" data-prompt=\"john\"></pre>")
+			expect(output).to match("<pre class=\" language-cpp  command-line \" data-output=\"1,2-5,10\" data-prompt=\"john\"><code></code></pre>")
 		end
 	end
 	

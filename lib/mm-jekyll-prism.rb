@@ -4,20 +4,23 @@ module Jekyll
 		include Liquid::StandardFilters
 
 		LANGUAGE = /^[a-z\-]+$/
-		OPTION_PARAMS = /(file|highlight|numbering|language)(?:\s*=\s*("[a-zA-Z0-9.,\-\/\s]*"|\-?[0-9]+))?/
+		OPTION_PARAMS = /(user|prompt|host|highlight|numbering|file|prompt|output)(?:\s*=\s*("[a-zA-Z0-9.,\-\/\s]*"|\-?[0-9]+))?/
 		
 		@language = nil
 		@file = nil
 		@numbering = false
 		@highlight = false
+        @output = false
+        @host = nil
+        @user = nil
+        @prompt = nil
 
 		def initialize(tag_name, markup, tokens)
 			super
 			
 			markup = markup.strip
 			
-			tmp = markup.split(/\s+/, 2)
-			
+			tmp = markup.split(/\s+/, 2)	
 			if tmp.count >= 1 then
 				param = tmp[0].strip.downcase
 				if LANGUAGE =~ param then
@@ -53,6 +56,14 @@ module Jekyll
 						@highlight = value.tr('"', '')
 					elsif name.eql? "numbering" then
 						@numbering = value.to_i
+			        elsif name.eql? "host" then
+						@host = value.tr('"', '')
+			        elsif name.eql? "user" then
+						@user = value.tr('"', '')
+		            elsif name.eql? "prompt" then
+						@prompt = value.tr('"', '')
+					elsif name.eql? "output" then
+						@output = value.tr('"', '')
 					end
 				else
 					syntax_error
@@ -94,6 +105,21 @@ module Jekyll
 				dataline = "data-line='#{@highlight}'"
 			end
 			
+		    unless @output.nil? then
+				dataline = dataline +  " data-output='#{@output}' "
+			end
+
+		    unless @prompt.nil? then
+                dataline = dataline + " data-prompt='#{@prompt}'"
+                class_attr = class_attr + " command-line "			
+            end
+
+            unless @user.nil? || @host.nil?then
+                dataline = dataline + " data-user='#{@user}'"
+                dataline = dataline + " data-host='#{@host}'"
+                class_attr = class_attr + " command-line "
+            end
+
 			if @file.nil?
 				"<pre class=\"#{class_attr}\" #{datastart} #{dataline}><code>#{code}</code></pre>"
 			else
