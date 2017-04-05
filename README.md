@@ -89,6 +89,33 @@ __With  offset__
     // ...
     {% endprism %}
 
+#### Command Line
+__Help document__: http://prismjs.com/plugins/command-line/
+
+To use add the options __user__ and __host__ with the desired user name and host name.
+
+For those that want a Window's style prompt, use the option __prompt__ with the desire prompt string.
+
+You can also choose which files are considered output lines using the __output__ tag. It operates similar to the highlighting tag.
+
+##### Example 
+__With User and Host__
+    
+    {% prism user="john" host="local" %}
+    // ...
+    {% endprism %}
+
+__With User and Host with Output__
+    
+    {% prism user="john" host="local" output="1,3-5,10%}
+    // ...
+    {% endprism %}
+
+__With Prompt__
+    
+    {% prism prompt="john"%}
+    // ...
+    {% endprism %}
 
 #### Show Language
 __Help document__: http://prismjs.com/plugins/show-language/
